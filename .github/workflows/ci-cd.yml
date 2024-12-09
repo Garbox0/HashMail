@@ -19,7 +19,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: 3.10
+        python-version: 3.12
 
     - name: Install dependencies
       run: |
@@ -45,6 +45,12 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: Debug Secrets
+      run: |
+        echo "Docker Username: ${{ secrets.DOCKER_USERNAME }}"
+        echo "Docker Password Length: ${#secrets.DOCKER_PASSWORD}"
+      
+
 
     - name: Build and push Docker image
       run: |
