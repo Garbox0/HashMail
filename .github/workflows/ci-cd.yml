@@ -27,6 +27,12 @@ jobs:
         source venv/bin/activate
         pip install -r requirements.txt
 
+    - name: Check pytest installation
+      run: |
+        source venv/bin/activate
+        pip list
+              
+
     - name: Run tests
       run: |
         source venv/bin/activate
