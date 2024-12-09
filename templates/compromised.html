@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Correos Comprometidos</title>
+</head>
+<body>
+    <h1>Lista de Correos Electrónicos Comprometidos</h1>
+    
+    <table border="1">
+        <tr>
+            <th>Correo</th>
+            <th>Hash</th>
+            <th>Acciones</th>
+        </tr>
+        {% for id, email, email_hash in compromised_hashes %}
+            <tr>
+                <td>{{ email }}</td>
+                <td>{{ email_hash }}</td>
+                <td>
+                    <form action="{{ url_for('remove_email_by_id', id=id) }}" method="POST">
+                        <button type="submit">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    
+    <a href="{{ url_for('download_csv') }}">
+        <button>Descargar CSV</button>
+    </a>    
+
+    <hr>
+    <p><a href="/">Volver al inicio</a></p>
+</body>
+</html>
+
