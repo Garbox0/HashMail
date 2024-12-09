@@ -28,6 +28,11 @@ jobs:
         pip install -r requirements.txt
         pip list
 
+    - name: Validate dependencies
+      run: |
+        source venv/bin/activate
+        python -m pytest || echo "Tests failed" && exit 1
+
   docker-build:
     needs: build-and-test
     runs-on: ubuntu-latest
@@ -36,7 +41,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: Log in to DockerHub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
     - name: Build and push Docker image
       run: |
-        docker build -t your_dockerhub_username/hashmail:latest .
-        docker push your_dockerhub_username/hashmail:latest
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/hashmail:latest .
+        docker push ${{ secrets.DOCKER_USERNAME }}/hashmail:latest
